@@ -1,0 +1,8 @@
+body {
+    background-image: url('img/LJP_Logo.jpg') ;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #171717;
+    color: blue !important;
+    font-size: 17px;
+}
