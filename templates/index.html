@@ -1,20 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <link href="/static/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
     <title>Le Juste Prix</title>
-    <link href="/static/knacss.css" rel="stylesheet"/>
+
 </head>
 <body>
-<section class="grid-1 has-gutter">
-    <div>1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-    <div>5</div>
-    <div>6</div>
-    <div>7</div>
-    <div>8</div>
-</section>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-2 sidenav ">
+            <p>Quelques informations sur le produits</p>
+        </div>
+        <div class="col-sm-10 text-left">
+            <h1 class="">Bienvenue dans les fameux jeux Le Juste Prix </h1>
+
+            <img src="{{ response.Products[0].MainImageUrl }}" alt="">
+
+            <p class="">Devine le prix de ce manifique {{ 'ajouternomici' }} en vente sur ce magnifique site qu'est
+                C-discount !! </p>
+            {% if result['result'] != True %}
+                <form action="" method="post">
+                    <label for="answer">Répondez ici !
+                        <input name="answer" type="text" {% if result['result'] == True %}disabled{% endif %}>
+                    </label>
+
+                    <input type="submit" class="btn-primary" {% if result['result'] == True %}disabled{% endif %}>
+                </form>
+            {% endif %}
+
+
+            {% if result['result'] == False %}
+                <table class="centered thick-border">
+
+                    {% for k in session['ListOfTry'] %}
+                        <tr>
+                            {% if session['ListOfTry'][k] == True %}
+                                <td>Ce n'est pas bon. C'est PLUS !</td>
+                            {% else %}
+                                <td>Ce n'est pas bon. C'est MOINS !</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+
+            {% if result['result'] == True %}
+                <table class="centered thick-border">
+
+                    {% for k in session['ListOfTry'] %}
+                        <tr>
+                            {% if session['ListOfTry'][k] == True %}
+                                <td>Ce n'est pas bon. C'est PLUS !</td>
+                            {% else %}
+                                <td>Ce n'est pas bon. C'est MOINS !</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+
+                <p>Bonne Réponse ! <br> Le Prix est bien de {{ price }} € </p>
+                <p>tu as réussi en {{ result['nbrOfTry'] }} essais</p>
+                <button><a href="/">Recommencer</a></button>
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+
 </body>
 </html>
