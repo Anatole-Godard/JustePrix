@@ -13,10 +13,11 @@ def index():
         itemrand = random.choice(list(d.values()))
         session['item'] = itemrand
 
+
     response_api = datasApi(session['item']).json()
 
     if request.method == 'POST':
-
+        session['lastAnswer'] = float(request.form['answer'])
         if session.get('historique') is None:
             session['historique'] = {'result': None, 'nbrOfTry': 0}
             session['ListOfTry'] = {1: None}

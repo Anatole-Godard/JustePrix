@@ -40,43 +40,55 @@
                         <input name="answer" type="number" step="0.01" required>
                     </label>
 
-                    <input type="submit" class="btn-primary">
+                    <input type="submit" class="btn btn-primary">
                 </form>
             {% endif %}
 
-
-            {% if result['result'] == False %}
-                <table class="centered thick-border">
-
-                    {% for k in session['ListOfTry'] %}
-                        <tr>
-                            {% if session['ListOfTry'][k] == 1 %}
-                                <td>Ce n'est pas bon. C'est PLUS ! </td>
-                            {% elif session['ListOfTry'][k] == 0 %}
-                                <td>Ce n'est pas bon. C'est MOINS ! </td>
-                            {% endif %}
-                        <td>Vous avez pris {{ session['time'][k] }} secondes</td>
-                        </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
-
-            {% if result['result'] == True %}
-                <table class="centered thick-border">
+            <table class="centered thick-border">
+                <thead>
+                <tr>
+                    <th>Prix</th>
+                    <th>Indice</th>
+                    <th>Temps</th>
+                </tr>
+                </thead>
+                {% if result['result'] == False %}
 
                     {% for k in session['ListOfTry'] %}
                         <tr>
                             {% if session['ListOfTry'][k] == 1 %}
+                                <td>{{ session['lastAnswer'] }} €</td>
+
                                 <td>Ce n'est pas bon. C'est PLUS !</td>
                             {% elif session['ListOfTry'][k] == 0 %}
-                                <td>Ce n'est pas bon. C'est MOINS ! </td>
-
+                                <td>{{ session['lastAnswer'] }}€</td>
+                                <td>Ce n'est pas bon. C'est MOINS !</td>
                             {% endif %}
-                        <td>Vous avez pris {{ session['time'][k] }} secondes</td>
+                            <td>Vous avez pris {{ session['time'][k] }} secondes</td>
                         </tr>
                     {% endfor %}
-                </table>
 
+                {% endif %}
+
+                {% if result['result'] == True %}
+
+
+                    {% for k in session['ListOfTry'] %}
+                        <tr>
+                            {% if session['ListOfTry'][k] == 1 %}
+                                <td>{{ session['lastAnswer'] }}</td>
+                                <td>Ce n'est pas bon. C'est PLUS !</td>
+                            {% elif session['ListOfTry'][k] == 0 %}
+                                <td>{{ session['lastAnswer'] }}</td>
+                                <td>Ce n'est pas bon. C'est MOINS !</td>
+
+                            {% endif %}
+                            <td>Vous avez pris {{ session['time'][k] }} secondes</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+            {% if result['result'] == True %}
                 <p>Bonne Réponse ! <br> Le Prix est bien de {{ price }} € </p>
                 <p>tu as réussi en {{ result['nbrOfTry'] }} essais</p>
                 <button><a href="/">Recommencer</a></button>
