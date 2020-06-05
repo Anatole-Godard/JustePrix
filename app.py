@@ -9,7 +9,7 @@ app.config["SECRET_KEY"] = "m6PX0zS593J5djmxQfq-dg"
 def index():
 
     if request.method != 'POST':
-        d = {1: 'tv', 2: 'jeux vidéo', 3: 'piscine', 4: 'trampoline', 5: 'enceinte'}
+        d = {1: 'tondeuse', 2: 'jeux vidéo', 3: 'piscine', 4: 'trampoline', 5: 'enceinte'}
         itemrand = random.choice(list(d.values()))
         session['item'] = itemrand
 
@@ -98,4 +98,9 @@ def game(response_api, a):
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     app.run(host='0.0.0.0')
+=======
+    app.run()
+
+>>>>>>> 01759cb013cf95f0d384143e27c297a310483dd9
