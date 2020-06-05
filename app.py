@@ -5,11 +5,15 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "m6PX0zS593J5djmxQfq-dg"
 
 
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    response_api = datasApi().json()
+
+    if request.method != 'POST':
+        d = {1: 'tv', 2: 'jeux vidéo', 3: 'piscine', 4: 'trampoline', 5: 'enceinte'}
+        itemrand = random.choice(list(d.values()))
+        session['item'] = itemrand
+
+    response_api = datasApi(session['item']).json()
 
     if request.method == 'POST':
 
@@ -39,16 +43,13 @@ def index():
 
     return render_template('index.html', response=response_api, result=a, price=price, Description=Description)
 
-d = {1: 'tv', 2: 'jeux vidéo', 3: 'piscine', 4: 'trampoline',5:'enceinte'}
-itemrand = random.choice(list(d.values()))
-print(itemrand)
 
-def datasApi():
+def datasApi(itemrand):
     url = "https://api.cdiscount.com/OpenApi/json/Search"
     params = {
         "ApiKey": "0e952750-da42-4014-abc5-4ddee032b8a5",
         "SearchRequest": {
-            "Keyword": itemrand,
+            "Keyword": session['item'],
             "SortBy": "",
             "Pagination": {
                 "ItemsPerPage": 1,
@@ -68,8 +69,6 @@ def datasApi():
     return requests.post(url, data=json.dumps(params))
 
 
-response_api = datasApi().json()
-print(float(response_api['Products'][0]['BestOffer']['SalePrice']))
 
 
 def game(response_api, a):
