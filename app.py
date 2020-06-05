@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, session
-import requests, json, time
-from pycdiscount import PyCdiscount
+import requests, json, time, random
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "m6PX0zS593J5djmxQfq-dg"
+
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -16,23 +17,38 @@ def index():
             session['historique'] = {'result': None, 'nbrOfTry': 0}
             session['ListOfTry'] = {1: None}
 
+        count = session['historique']['nbrOfTry'] + 1
+        lastgameT = session['time'][str(count)]
+
+        tdif = time.time() - lastgameT
+        session['time'][str(count)] = tdif
+        newCount = count + 1
+        session['time'][str(newCount)] = time.time()
+
         a = session.get('historique')
         game(response_api, a)
 
     else:
         session['historique'] = {'result': None, 'nbrOfTry': 0}
         session['ListOfTry'] = {1: None}
+        session['time'] = {1: time.time()}
+
         a = session.get('historique')
     price = float(response_api['Products'][0]['BestOffer']['SalePrice'])
-    return render_template('index.html', response=response_api, result=a, price=price)
+    Description = response_api['Products'][0]['Description']
 
+    return render_template('index.html', response=response_api, result=a, price=price, Description=Description)
+
+d = {1: 'tv', 2: 'jeux vidéo', 3: 'piscine', 4: 'trampoline',5:'enceinte'}
+itemrand = random.choice(list(d.values()))
+print(itemrand)
 
 def datasApi():
     url = "https://api.cdiscount.com/OpenApi/json/Search"
     params = {
         "ApiKey": "0e952750-da42-4014-abc5-4ddee032b8a5",
         "SearchRequest": {
-            "Keyword": "tv",
+            "Keyword": itemrand,
             "SortBy": "",
             "Pagination": {
                 "ItemsPerPage": 1,
@@ -43,7 +59,7 @@ def datasApi():
                     "Min": 0,
                     "Max": 0
                 },
-                "Navigation": "computers",
+                "Navigation": itemrand,
                 "IncludeMarketPlace": 'false',
                 "Condition": 'null'
             }
@@ -69,6 +85,7 @@ def game(response_api, a):
         if float(request.form['answer']) < float(response_api['Products'][0]['BestOffer']['SalePrice']):
 
             session['ListOfTry'][str(nbr)] = 1
+
 
         elif float(request.form['answer']) > float(response_api['Products'][0]['BestOffer']['SalePrice']):
 
