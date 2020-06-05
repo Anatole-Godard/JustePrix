@@ -25,22 +25,22 @@
             {% if result['result'] != True %}
                 <form action="" method="post">
                     <label for="answer">Répondez ici !
-                        <input name="answer" type="text" {% if result['result'] == True %}disabled{% endif %}>
+                        <input name="answer" type="number" step="0.01" >
                     </label>
 
-                    <input type="submit" class="btn-primary" {% if result['result'] == True %}disabled{% endif %}>
+                    <input type="submit" class="btn-primary" >
                 </form>
             {% endif %}
-
+{{ session }}
 
             {% if result['result'] == False %}
                 <table class="centered thick-border">
 
                     {% for k in session['ListOfTry'] %}
                         <tr>
-                            {% if session['ListOfTry'][k] == True %}
+                            {% if session['ListOfTry'][k] == 1 %}
                                 <td>Ce n'est pas bon. C'est PLUS !</td>
-                            {% else %}
+                            {% elif session['ListOfTry'][k] == 0 %}
                                 <td>Ce n'est pas bon. C'est MOINS !</td>
                             {% endif %}
                         </tr>
@@ -53,10 +53,11 @@
 
                     {% for k in session['ListOfTry'] %}
                         <tr>
-                            {% if session['ListOfTry'][k] == True %}
+                            {% if session['ListOfTry'][k] == 1 %}
                                 <td>Ce n'est pas bon. C'est PLUS !</td>
-                            {% else %}
+                            {% elif session['ListOfTry'][k] == 0 %}
                                 <td>Ce n'est pas bon. C'est MOINS !</td>
+
                             {% endif %}
                         </tr>
                     {% endfor %}

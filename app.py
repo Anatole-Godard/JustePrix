@@ -68,11 +68,11 @@ def game(response_api, a):
 
         if float(request.form['answer']) < float(response_api['Products'][0]['BestOffer']['SalePrice']):
 
-            session['ListOfTry'][str(nbr)] = True
+            session['ListOfTry'][str(nbr)] = 1
 
         elif float(request.form['answer']) > float(response_api['Products'][0]['BestOffer']['SalePrice']):
 
-            session['ListOfTry'][str(nbr)] = False
+            session['ListOfTry'][str(nbr)] = 0
 
     session['historique'] = a
 
