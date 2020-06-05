@@ -21,7 +21,7 @@ def index():
         lastgameT = session['time'][str(count)]
 
         tdif = time.time() - lastgameT
-        session['time'][str(count)] = tdif
+        session['time'][str(count)] = "%.2f" % tdif
         newCount = count + 1
         session['time'][str(newCount)] = time.time()
 

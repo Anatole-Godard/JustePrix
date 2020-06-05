@@ -55,7 +55,7 @@
                             {% elif session['ListOfTry'][k] == 0 %}
                                 <td>Ce n'est pas bon. C'est MOINS ! </td>
                             {% endif %}
-                        <td>Vous avez pris {{ session['time'][k] }}secondes</td>
+                        <td>Vous avez pris {{ session['time'][k] }} secondes</td>
                         </tr>
                     {% endfor %}
                 </table>
@@ -72,14 +72,13 @@
                                 <td>Ce n'est pas bon. C'est MOINS ! </td>
 
                             {% endif %}
-                        <td>Vous avez pris {{ session['time'][k] }}secondes</td>
+                        <td>Vous avez pris {{ session['time'][k] }} secondes</td>
                         </tr>
                     {% endfor %}
                 </table>
 
                 <p>Bonne Réponse ! <br> Le Prix est bien de {{ price }} € </p>
                 <p>tu as réussi en {{ result['nbrOfTry'] }} essais</p>
-                <p> Vous avez pris {{ session['time'][result['nbrOfTry']] }}secondes</p>
                 <button><a href="/">Recommencer</a></button>
             {% endif %}
 
