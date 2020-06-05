@@ -17,13 +17,15 @@ def index():
     response_api = datasApi(session['item']).json()
 
     if request.method == 'POST':
-        session['lastAnswer'] = float(request.form['answer'])
+
         if session.get('historique') is None:
             session['historique'] = {'result': None, 'nbrOfTry': 0}
             session['ListOfTry'] = {1: None}
 
         count = session['historique']['nbrOfTry'] + 1
         lastgameT = session['time'][str(count)]
+
+        session['lastAnswer'][str(count)] = float(request.form['answer'])
 
         tdif = time.time() - lastgameT
         session['time'][str(count)] = "%.2f" % tdif
@@ -37,6 +39,7 @@ def index():
         session['historique'] = {'result': None, 'nbrOfTry': 0}
         session['ListOfTry'] = {1: None}
         session['time'] = {1: time.time()}
+        session['lastAnswer'] = {1: 0}
 
         a = session.get('historique')
     price = float(response_api['Products'][0]['BestOffer']['SalePrice'])

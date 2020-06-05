@@ -57,11 +57,10 @@
                     {% for k in session['ListOfTry'] %}
                         <tr>
                             {% if session['ListOfTry'][k] == 1 %}
-                                <td>{{ session['lastAnswer'] }} €</td>
-
+                                <td>{{ session['lastAnswer'][k] }}€</td>
                                 <td>Ce n'est pas bon. C'est PLUS !</td>
                             {% elif session['ListOfTry'][k] == 0 %}
-                                <td>{{ session['lastAnswer'] }}€</td>
+                                <td>{{ session['lastAnswer'][k] }}€</td>
                                 <td>Ce n'est pas bon. C'est MOINS !</td>
                             {% endif %}
                             <td>Vous avez pris {{ session['time'][k] }} secondes</td>
@@ -76,10 +75,10 @@
                     {% for k in session['ListOfTry'] %}
                         <tr>
                             {% if session['ListOfTry'][k] == 1 %}
-                                <td>{{ session['lastAnswer'] }}</td>
+                                <td>{{ session['lastAnswer'][k] }}€</td>
                                 <td>Ce n'est pas bon. C'est PLUS !</td>
                             {% elif session['ListOfTry'][k] == 0 %}
-                                <td>{{ session['lastAnswer'] }}</td>
+                                <td>{{ session['lastAnswer'][k] }}€</td>
                                 <td>Ce n'est pas bon. C'est MOINS !</td>
 
                             {% endif %}
